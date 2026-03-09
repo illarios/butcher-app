@@ -5,6 +5,7 @@ import ImageGallery from '@/components/shop/product/ImageGallery'
 import CutBuilder from '@/components/shop/product/CutBuilder'
 import RelatedRecipes from '@/components/shop/product/RelatedRecipes'
 import type { Metadata } from 'next'
+import { LOCAL_IMAGES } from '@/lib/localImages'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -61,7 +62,12 @@ export default async function ProductPage({ params }: PageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
 
           {/* Left — Gallery */}
-          <ImageGallery images={product.images ?? []} alt={product.name} />
+          <ImageGallery
+            images={LOCAL_IMAGES[product.slug]
+              ? [LOCAL_IMAGES[product.slug], ...(product.images ?? [])]
+              : (product.images ?? [])}
+            alt={product.name}
+          />
 
           {/* Right — Info + CutBuilder */}
           <div>
