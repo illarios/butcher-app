@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Product } from '@/types'
 
 function ProductCard({ product }: { product: Product }) {
@@ -12,11 +13,12 @@ function ProductCard({ product }: { product: Product }) {
       {/* Image */}
       <div className="aspect-square bg-[#EDE0D0] relative overflow-hidden">
         {product.images?.[0] ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={product.images[0]}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-25">

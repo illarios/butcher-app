@@ -2,7 +2,6 @@ import Hero from '@/components/shop/home/Hero'
 import CategoriesBar from '@/components/shop/home/CategoriesBar'
 import FeaturedProducts from '@/components/shop/home/FeaturedProducts'
 import BrandStory from '@/components/shop/home/BrandStory'
-import SubscriptionTeaser from '@/components/shop/home/SubscriptionTeaser'
 import LatestRecipes from '@/components/shop/home/LatestRecipes'
 
 const localBusinessJsonLd = {
@@ -47,7 +46,6 @@ export default function HomePage() {
       <CategoriesBar />
       <FeaturedProducts />
       <BrandStory />
-      <SubscriptionTeaser />
       <LatestRecipes />
     </>
   )

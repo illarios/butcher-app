@@ -20,7 +20,7 @@ export default function CategoriesBar() {
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.slug}
-              href={`/shop/${cat.slug}`}
+              href={`/products?category=${cat.slug}`}
               className="group flex flex-col items-center gap-3 py-6 px-4 bg-white border border-[#EDE0D0] hover:border-[#C8102E] transition-colors"
             >
               <span className="text-4xl" role="img" aria-label={cat.label}>

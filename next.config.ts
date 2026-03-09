@@ -9,7 +9,7 @@ const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://vercel.live;
   style-src 'self' 'unsafe-inline';
-  img-src 'self' blob: data: https://*.supabase.co https://*.supabase.in;
+  img-src 'self' blob: data: https://*.supabase.co https://*.supabase.in https://images.unsplash.com;
   font-src 'self';
   connect-src 'self' https://*.supabase.co https://*.supabase.in wss://*.supabase.co https://api.resend.com https://api.stripe.com https://vitals.vercel-insights.com;
   frame-src https://js.stripe.com https://hooks.stripe.com;
@@ -33,6 +33,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: supabaseHostname,
         pathname: '/storage/v1/object/public/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
       },
     ],
   },

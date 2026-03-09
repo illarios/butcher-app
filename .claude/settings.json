@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/Users/l.lazaridis-ch/Documents/etheleo/github/butcher/markos-kreopolio/app/\\(admin\\)/admin\")",
+      "Bash(mv \"/Users/l.lazaridis-ch/Documents/etheleo/github/butcher/markos-kreopolio/app/\\(admin\\)/page.tsx\" \"/Users/l.lazaridis-ch/Documents/etheleo/github/butcher/markos-kreopolio/app/\\(admin\\)/admin/page.tsx\")",
+      "Bash(ls \"/Users/l.lazaridis-ch/Documents/etheleo/github/butcher/markos-kreopolio/app/\\(admin\\)/\")",
+      "Bash(for dir in analytics customers delivery-zones inventory orders products)",
+      "Bash(do mv \"$dir\" \"admin/$dir\")",
+      "Bash(done)",
+      "Bash(find \"/Users/l.lazaridis-ch/Documents/etheleo/github/butcher/markos-kreopolio/app/\\(admin\\)\" -name \"page.tsx\")",
+      "Bash(mkdir -p admin)",
+      "Bash(mv page.tsx analytics customers delivery-zones inventory orders products admin/)",
+      "Bash(find \"/Users/l.lazaridis-ch/Documents/etheleo/github/butcher/butcher-app/app/\\(admin\\)\" -name \"page.tsx\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\(''exports'', {}\\), indent=2\\)\\)\")",
+      "Bash(node -e \"const tw = require\\(''tailwindcss''\\); console.log\\(tw.version || ''no version''\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); deps={**d.get\\(''dependencies'',{}\\), **d.get\\(''devDependencies'',{}\\)}; [print\\(k,v\\) for k,v in deps.items\\(\\) if ''tailwind'' in k or ''postcss'' in k]\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(''version:'', d.get\\(''version''\\)\\); print\\(''exports keys:'', list\\(d.get\\(''exports'',{}\\).keys\\(\\)\\)[:10]\\)\")"
+    ]
+  }
+}

@@ -48,7 +48,7 @@ export async function PATCH(request: Request, { params }: Params) {
     },
     out_for_delivery: {
       title: `Παραγγελία ${order.order_number} στο δρόμο!`,
-      body: 'Ο διανομέας είναι καθ' οδόν.',
+      body: 'Ο διανομέας είναι καθ\u2019 οδόν.',
     },
     delivered: {
       title: `Παραγγελία ${order.order_number} παραδόθηκε`,

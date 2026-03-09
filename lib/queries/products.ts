@@ -22,15 +22,17 @@ export async function getProducts(filters: CatalogFilters = {}): Promise<{
   const from = (page - 1) * PAGE_SIZE
   const to   = from + PAGE_SIZE - 1
 
+  const select = filters.category
+    ? '*, category:categories!inner(*), cuts(*)'
+    : '*, category:categories(*), cuts(*)'
+
   let query = supabase
     .from('products')
-    .select('*, category:categories(*), cuts(*)', { count: 'exact' })
+    .select(select, { count: 'exact' })
     .eq('is_active', true)
 
   if (filters.category) {
     query = query.eq('categories.slug', filters.category)
-    // join filter via categories
-    query = query.not('category_id', 'is', null)
   }
   if (filters.minPrice !== undefined) {
     query = query.gte('price_per_kg', filters.minPrice)
