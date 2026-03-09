@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import type { Product, Cut } from '@/types'
 import { useCartStore } from '@/lib/stores/cart'
+import { LOCAL_IMAGES } from '@/lib/localImages'
 
 interface Props {
   product: Product
@@ -46,7 +47,7 @@ export default function CutBuilder({ product }: Props) {
       pricePerKg:        product.price_per_kg,
       extraPricePerKg:   selectedCut?.extra_price_per_kg ?? 0,
       notes:             notes.trim() || undefined,
-      image:             product.images?.[0],
+      image:             LOCAL_IMAGES[product.slug] ?? product.images?.[0],
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2500)
