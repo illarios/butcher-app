@@ -16,6 +16,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     .eq('status', 'pending')
 
   return (
+    <>
     <div className="min-h-screen flex bg-[#111]">
       <aside className="w-56 shrink-0 bg-black flex flex-col border-r border-white/10">
         <div className="px-5 py-5 border-b border-white/10">
@@ -58,5 +59,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       </div>
     </div>
     <AdminBottomNav />
+    </>
   )
 }
