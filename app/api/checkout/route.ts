@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
 import { createClient } from '@/lib/supabase/server'
 import { orderReceivedEmail, adminNewOrderEmail } from '@/lib/email/templates'
 import type { CartStoreItem } from '@/lib/stores/cart'
 import type { Address, FulfillmentType, PaymentMethod, OrderItemSnapshot } from '@/types'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface CheckoutPayload {
   items:            CartStoreItem[]
@@ -139,20 +136,25 @@ export async function POST(request: NextRequest) {
   const customerEmail = user.email!
   const customerName  = profile?.full_name ?? undefined
 
-  Promise.allSettled([
-    resend.emails.send({
-      from:    'Κρεοπωλείο Μάρκος <noreply@kreopoleiomakros.gr>',
-      to:      customerEmail,
-      subject: `Επιβεβαίωση παραγγελίας ${order.order_number}`,
-      html:    orderReceivedEmail(order, customerName),
-    }),
-    resend.emails.send({
-      from:    'Σύστημα <noreply@kreopoleiomakros.gr>',
-      to:      process.env.ADMIN_EMAIL ?? 'admin@kreopoleiomakros.gr',
-      subject: `🔔 Νέα παραγγελία ${order.order_number}`,
-      html:    adminNewOrderEmail(order),
-    }),
-  ]).catch(console.error)
+  if (process.env.RESEND_API_KEY) {
+    import('resend').then(({ Resend }) => {
+      const resend = new Resend(process.env.RESEND_API_KEY)
+      Promise.allSettled([
+        resend.emails.send({
+          from:    'Κρεοπωλείο Μάρκος <noreply@kreopoleiomakros.gr>',
+          to:      customerEmail,
+          subject: `Επιβεβαίωση παραγγελίας ${order.order_number}`,
+          html:    orderReceivedEmail(order, customerName),
+        }),
+        resend.emails.send({
+          from:    'Σύστημα <noreply@kreopoleiomakros.gr>',
+          to:      process.env.ADMIN_EMAIL ?? 'admin@kreopoleiomakros.gr',
+          subject: `🔔 Νέα παραγγελία ${order.order_number}`,
+          html:    adminNewOrderEmail(order),
+        }),
+      ]).catch(console.error)
+    }).catch(() => {})
+  }
 
   return NextResponse.json({
     orderId:     order.id,
