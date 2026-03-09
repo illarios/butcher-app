@@ -58,9 +58,8 @@ export default withPWA({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
-  fallbacks: {
-    document: '/offline',
-  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fallbacks: { document: '/offline' } as any,
   runtimeCaching: [
     {
       urlPattern: /\.supabase\.co\/storage/,
@@ -81,4 +80,5 @@ export default withPWA({
       options: { cacheName: 'google-fonts' },
     },
   ],
-})(nextConfig)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+})(nextConfig as any)
