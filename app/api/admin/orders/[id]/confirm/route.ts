@@ -1,11 +1,8 @@
 import { NextResponse } from 'next/server'
-import { Resend } from 'resend'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { orderConfirmedEmail } from '@/lib/email/templates'
 import { createNotification } from '@/lib/notifications'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface Params { params: Promise<{ id: string }> }
 
@@ -71,8 +68,9 @@ export async function PATCH(request: Request, { params }: Params) {
   }).catch(() => {})
 
   // Send confirmation email (non-blocking)
-  if (customerEmail) {
-    resend.emails.send({
+  if (customerEmail && process.env.RESEND_API_KEY) {
+    const { Resend } = await import('resend')
+    new Resend(process.env.RESEND_API_KEY).emails.send({
       from: 'Κρεοπωλείο Μάρκος <noreply@kreopoleiomakros.gr>',
       to: customerEmail,
       subject: `Παραγγελία ${order.order_number} — Έτοιμη ${readyLabel}`,
