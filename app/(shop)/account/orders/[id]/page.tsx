@@ -3,32 +3,10 @@ import Link from 'next/link'
 import { getOrderById, getOrderStatusLog } from '@/lib/queries/account'
 import type { OrderStatus, FulfillmentType } from '@/types'
 import OrderDetailClient from './OrderDetailClient'
+import { STATUS_CONFIG, STATUS_ORDER, formatPrice, formatWeight, FULFILLMENT_CONFIG } from './order-utils'
 
 interface PageProps {
   params: Promise<{ id: string }>
-}
-
-// ── Status config ──────────────────────────────────────────────────────────────
-export const STATUS_CONFIG: Record<OrderStatus, { label: string; description: string; icon: string }> = {
-  pending:          { label: 'Ελήφθη',         description: 'Η παραγγελία σας ελήφθη',            icon: '📋' },
-  confirmed:        { label: 'Επιβεβαιώθηκε',  description: 'Ο Μάρκος επιβεβαίωσε την παραγγελία', icon: '✓'  },
-  preparing:        { label: 'Ετοιμάζεται',    description: 'Το κρέας σας ετοιμάζεται',            icon: '🔪' },
-  ready:            { label: 'Έτοιμη',          description: 'Η παραγγελία σας είναι έτοιμη',       icon: '✦'  },
-  out_for_delivery: { label: 'Σε διανομή',      description: 'Ο διανομέας είναι καθ\' οδόν',        icon: '🚚' },
-  delivered:        { label: 'Παραδόθηκε',      description: 'Η παραγγελία σας παραδόθηκε',         icon: '🎉' },
-  cancelled:        { label: 'Ακυρώθηκε',       description: 'Η παραγγελία ακυρώθηκε',              icon: '✕'  },
-}
-
-const STATUS_ORDER: OrderStatus[] = [
-  'pending', 'confirmed', 'preparing', 'ready', 'out_for_delivery', 'delivered',
-]
-
-export function formatPrice(n: number) {
-  return n.toFixed(2).replace('.', ',') + '€'
-}
-
-export function formatWeight(g: number) {
-  return g >= 1000 ? `${(g / 1000).toFixed(2).replace('.', ',')} kg` : `${g} g`
 }
 
 // ── Page ───────────────────────────────────────────────────────────────────────
@@ -242,11 +220,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
 
 // ── Fulfillment badge ──────────────────────────────────────────────────────────
 function FulfillmentBadge({ type }: { type: FulfillmentType }) {
-  const config: Record<FulfillmentType, { label: string; icon: string }> = {
-    pickup:   { label: 'Παραλαβή', icon: '🏪' },
-    delivery: { label: 'Διανομή',  icon: '🚚' },
-  }
-  const c = config[type]
+  const c = FULFILLMENT_CONFIG[type]
   return (
     <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-[#2E2E2E]/50 border border-[#EDE0D0] px-2 py-0.5">
       {c.icon} {c.label}

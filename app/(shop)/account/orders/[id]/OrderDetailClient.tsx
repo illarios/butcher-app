@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useCartStore } from '@/lib/stores/cart'
 import type { Order, OrderStatus } from '@/types'
-import { STATUS_CONFIG, formatPrice, formatWeight } from './page'
+import { STATUS_CONFIG, formatPrice, formatWeight } from './order-utils'
 
 interface StatusLogEntry {
   id: string
