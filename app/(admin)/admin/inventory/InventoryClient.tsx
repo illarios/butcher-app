@@ -7,7 +7,7 @@ interface ProductRow {
   name: string
   stock_grams: number | null
   is_active: boolean
-  categories?: { name: string } | null
+  category?: { name: string } | null
 }
 
 interface Props { initialProducts: ProductRow[] }
@@ -129,7 +129,7 @@ export default function InventoryClient({ initialProducts }: Props) {
                     <span className="font-medium text-[#2E2E2E]">{p.name}</span>
                     {!p.is_active && <span className="ml-2 text-[10px] text-[#2E2E2E]/30 uppercase">Ανενεργό</span>}
                   </td>
-                  <td className="px-5 py-3 text-[#2E2E2E]/60">{(p.categories as any)?.name ?? '—'}</td>
+                  <td className="px-5 py-3 text-[#2E2E2E]/60">{p.category?.name ?? '—'}</td>
                   <td className="px-5 py-3 text-center">
                     <span className={`font-semibold ${isLow ? 'text-red-600' : 'text-[#2E2E2E]'}`}>
                       {isLow && '⚠ '}{formatStock(p.stock_grams)}

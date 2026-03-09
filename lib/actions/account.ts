@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
 // ── Update profile ─────────────────────────────────────────────────────────────
-export async function updateProfileAction(formData: FormData) {
+export async function updateProfileAction(_prevState: unknown, formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Δεν είστε συνδεδεμένοι.' }
@@ -66,7 +66,7 @@ export async function updateAddressAction(formData: FormData) {
 }
 
 // ── Change password ────────────────────────────────────────────────────────────
-export async function changePasswordAction(formData: FormData) {
+export async function changePasswordAction(_prevState: unknown, formData: FormData) {
   const supabase = await createClient()
 
   const current  = formData.get('current_password') as string

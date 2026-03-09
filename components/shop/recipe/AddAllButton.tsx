@@ -6,8 +6,8 @@ interface RecipeProduct {
   id: string
   name: string
   price_per_kg: number
-  images: string[]
-  category?: { name: string; slug: string }
+  images: string[] | null
+  category?: { name: string; slug: string } | null
 }
 
 export default function AddAllButton({ products }: { products: RecipeProduct[] }) {

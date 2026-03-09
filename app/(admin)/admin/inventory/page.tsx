@@ -7,8 +7,9 @@ export default async function InventoryPage() {
   const supabase = await createClient()
   const { data: products } = await supabase
     .from('products')
-    .select('id, name, stock_grams, is_active, categories:category_id(name)')
+    .select('id, name, stock_grams, is_active, category:category_id(name)')
     .order('name')
 
-  return <InventoryClient initialProducts={products ?? []} />
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return <InventoryClient initialProducts={(products ?? []) as any} />
 }

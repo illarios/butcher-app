@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createNotification } from '@/lib/notifications'
 
-export async function loginAction(formData: FormData) {
+export async function loginAction(_prevState: unknown, formData: FormData): Promise<{ error?: string }> {
   const supabase = await createClient()
 
   const email = formData.get('email') as string
@@ -28,7 +28,7 @@ export async function loginAction(formData: FormData) {
   redirect(nextParam ?? '/account')
 }
 
-export async function registerAction(formData: FormData) {
+export async function registerAction(_prevState: unknown, formData: FormData): Promise<{ error?: string; success?: string }> {
   const supabase = await createClient()
 
   const email = formData.get('email') as string
@@ -78,7 +78,7 @@ export async function logoutAction() {
   redirect('/')
 }
 
-export async function forgotPasswordAction(formData: FormData) {
+export async function forgotPasswordAction(_prevState: unknown, formData: FormData): Promise<{ error?: string; success?: string }> {
   const supabase = await createClient()
 
   const email = formData.get('email') as string
@@ -94,7 +94,7 @@ export async function forgotPasswordAction(formData: FormData) {
   return { success: 'Στείλαμε οδηγίες επαναφοράς κωδικού στο email σας.' }
 }
 
-export async function resetPasswordAction(formData: FormData) {
+export async function resetPasswordAction(_prevState: unknown, formData: FormData): Promise<{ error?: string }> {
   const supabase = await createClient()
 
   const password = formData.get('password') as string

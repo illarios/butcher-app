@@ -45,13 +45,17 @@ export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
   return (data as Recipe) ?? null
 }
 
-export async function getProductsForRecipe(productIds: string[]) {
+export async function getProductsForRecipe(productIds: string[]): Promise<{
+  id: string; name: string; slug: string; price_per_kg: number
+  images: string[]; category?: { name: string; slug: string } | null
+}[]> {
   if (!productIds.length) return []
   const supabase = await createClient()
   const { data } = await supabase
     .from('products')
-    .select('id, name, slug, price_per_kg, images, category:categories(name, slug)')
+    .select('id, name, slug, price_per_kg, images, category:category_id(name, slug)')
     .in('id', productIds)
     .eq('is_active', true)
-  return data ?? []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data ?? []) as any
 }
