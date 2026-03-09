@@ -64,7 +64,7 @@ export default async function ProductPage({ params }: PageProps) {
           {/* Left — Gallery */}
           <ImageGallery
             images={LOCAL_IMAGES[product.slug]
-              ? [LOCAL_IMAGES[product.slug], ...(product.images ?? [])]
+              ? [LOCAL_IMAGES[product.slug]]
               : (product.images ?? [])}
             alt={product.name}
           />
