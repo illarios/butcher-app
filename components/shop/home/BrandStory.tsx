@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 const STATS = [
   { value: '30+', label: 'Χρόνια εμπειρίας' },
   { value: '200+', label: 'Προϊόντα' },
@@ -13,9 +15,14 @@ export default function BrandStory() {
 
           {/* Image side */}
           <div className="relative">
-            <div className="aspect-[4/5] bg-[#EDE0D0] overflow-hidden">
-              {/* Replace with actual image */}
-              <div className="w-full h-full flex items-center justify-center text-8xl opacity-20">🥩</div>
+            <div className="aspect-[4/5] bg-[#EDE0D0] overflow-hidden relative">
+              <Image
+                src="/images/products/TomahawkRibeye.jpg"
+                alt="Κρεοπωλείο Μάρκος — φρέσκο κρέας"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
             </div>
             {/* Red accent block */}
             <div

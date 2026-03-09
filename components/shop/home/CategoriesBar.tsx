@@ -1,11 +1,12 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 const CATEGORIES = [
-  { slug: 'mosxari',        label: 'Μοσχάρι',        emoji: '🐄', color: '#8B0000' },
-  { slug: 'arni-katsiki',  label: 'Αρνί & Κατσίκι', emoji: '🐑', color: '#5C4033' },
-  { slug: 'xoirino',       label: 'Χοιρινό',         emoji: '🐷', color: '#C8102E' },
-  { slug: 'poulerika',     label: 'Πουλερικά',       emoji: '🐓', color: '#7B3F00' },
-  { slug: 'paraskeyasmata',label: 'Παρασκευάσματα',  emoji: '🥩', color: '#2E2E2E' },
+  { slug: 'mosxari',         label: 'Μοσχάρι',        image: '/images/products/HNG_ribeye.jpg' },
+  { slug: 'arni-katsiki',   label: 'Αρνί & Κατσίκι', image: '/images/products/KoreanShortRib.webp' },
+  { slug: 'xoirino',        label: 'Χοιρινό',         image: '/images/products/PorkSpareRibs.jpg' },
+  { slug: 'poulerika',      label: 'Πουλερικά',       image: '/images/products/Chicken_thighs_bonein.jpg' },
+  { slug: 'paraskeyasmata', label: 'Παρασκευάσματα',  image: '/images/products/Chorizo.jpg' },
 ]
 
 export default function CategoriesBar() {
@@ -21,20 +22,23 @@ export default function CategoriesBar() {
             <Link
               key={cat.slug}
               href={`/products?category=${cat.slug}`}
-              className="group flex flex-col items-center gap-3 py-6 px-4 bg-white border border-[#EDE0D0] hover:border-[#C8102E] transition-colors"
+              className="group flex flex-col items-center gap-3 bg-white border border-[#EDE0D0] hover:border-[#C8102E] transition-colors overflow-hidden"
             >
-              <span className="text-4xl" role="img" aria-label={cat.label}>
-                {cat.emoji}
-              </span>
+              {/* Image */}
+              <div className="w-full aspect-square relative overflow-hidden">
+                <Image
+                  src={cat.image}
+                  alt={cat.label}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
               <span
-                className="text-xs uppercase tracking-widest text-[#2E2E2E] group-hover:text-[#C8102E] transition-colors text-center"
+                className="text-xs uppercase tracking-widest text-[#2E2E2E] group-hover:text-[#C8102E] transition-colors text-center pb-4 px-2"
               >
                 {cat.label}
               </span>
-              <span
-                className="block h-0.5 w-6 bg-[#EDE0D0] group-hover:bg-[#C8102E] transition-colors"
-                aria-hidden="true"
-              />
             </Link>
           ))}
         </div>

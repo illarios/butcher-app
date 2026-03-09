@@ -1,0 +1,30 @@
+{
+  "name": "Κρεοπωλείο Μάρκος",
+  "short_name": "Μάρκος",
+  "description": "Φρέσκα κρέατα από τον Μάρκο — παραγγελία online.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5EFE6",
+  "theme_color": "#C8102E",
+  "lang": "el",
+  "icons": [
+    { "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-144x144.png", "sizes": "144x144", "type": "image/png" },
+    { "src": "/icons/icon-96x96.png",   "sizes": "96x96",   "type": "image/png" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Νέα Παραγγελία",
+      "url": "/products",
+      "icons": [{ "src": "/icons/shortcut-order.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Οι Παραγγελίες μου",
+      "url": "/account/orders",
+      "icons": [{ "src": "/icons/shortcut-account.png", "sizes": "96x96" }]
+    }
+  ]
+}

@@ -1,13 +1,14 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 // Static featured products matching seed data prices
 const FEATURED = [
-  { slug: 'mosxari-kiloto',       name: 'Κιλότο',                    price: 17.90, category: 'Μοσχάρι' },
-  { slug: 'mosxari-noua',         name: 'Νουά',                      price: 18.50, category: 'Μοσχάρι' },
-  { slug: 'arni',                 name: 'Αρνί',                      price: 18.80, category: 'Αρνί & Κατσίκι' },
-  { slug: 'xoirino-brizola',      name: 'Μπριζόλα χοιρινή',          price:  7.90, category: 'Χοιρινό' },
-  { slug: 'kotopoulo-olokliro',   name: 'Κοτόπουλο ΚΙΤΡΙΝΟ',         price:  4.50, category: 'Πουλερικά' },
-  { slug: 'mosxari-soutzouki',    name: 'Σουτζούκι του χασάπη',       price: 17.80, category: 'Παρασκευάσματα' },
+  { slug: 'mosxari-kiloto',     name: 'Κιλότο',               price: 17.90, category: 'Μοσχάρι',         image: '/images/products/BottomRound.jpg' },
+  { slug: 'mosxari-noua',       name: 'Νουά',                 price: 18.50, category: 'Μοσχάρι',         image: '/images/products/HNG_sirloin.jpg' },
+  { slug: 'arni',               name: 'Αρνί',                 price: 18.80, category: 'Αρνί & Κατσίκι',  image: '/images/products/Vacio.jpg' },
+  { slug: 'xoirino-brizola',    name: 'Μπριζόλα χοιρινή',    price:  7.90, category: 'Χοιρινό',         image: '/images/products/product-pork-boneless-pork-chop.jpg' },
+  { slug: 'kotopoulo-olokliro', name: 'Κοτόπουλο ΚΙΤΡΙΝΟ',   price:  4.50, category: 'Πουλερικά',       image: '/images/products/Chicken_thighs_bonein.jpg' },
+  { slug: 'mosxari-soutzouki',  name: 'Σουτζούκι του χασάπη', price: 17.80, category: 'Παρασκευάσματα', image: '/images/products/Chorizo.jpg' },
 ]
 
 function ProductCard({ product }: { product: typeof FEATURED[0] }) {
@@ -16,14 +17,15 @@ function ProductCard({ product }: { product: typeof FEATURED[0] }) {
       href={`/products/${product.slug}`}
       className="group flex flex-col bg-white border border-[#EDE0D0] hover:border-[#C8102E] transition-colors overflow-hidden"
     >
-      {/* Image placeholder */}
+      {/* Image */}
       <div className="aspect-square bg-[#EDE0D0] relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-30">
-          🥩
-        </div>
-        {/* Image when available */}
-        {/* <Image src={product.image} alt={product.name} fill className="object-cover" /> */}
-
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+        />
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-[#C8102E]/0 group-hover:bg-[#C8102E]/5 transition-colors" />
       </div>

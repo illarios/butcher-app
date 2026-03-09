@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Product } from '@/types'
+import { LOCAL_IMAGES } from '@/lib/localImages'
 
 function ProductCard({ product }: { product: Product }) {
   const inStock = (product.stock_grams ?? 1) > 0
+  const imageSrc = LOCAL_IMAGES[product.slug] ?? product.images?.[0] ?? null
 
   return (
     <Link
@@ -12,9 +14,9 @@ function ProductCard({ product }: { product: Product }) {
     >
       {/* Image */}
       <div className="aspect-square bg-[#EDE0D0] relative overflow-hidden">
-        {product.images?.[0] ? (
+        {imageSrc ? (
           <Image
-            src={product.images[0]}
+            src={imageSrc}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"

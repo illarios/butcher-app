@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import withPWA from 'next-pwa'
 
 // Supabase storage hostname — update with your actual project ref
 const supabaseHostname = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -27,6 +28,7 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
+  turbopack: {},
   images: {
     remotePatterns: [
       {
@@ -51,4 +53,32 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig
+export default withPWA({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+  fallbacks: {
+    document: '/offline',
+  },
+  runtimeCaching: [
+    {
+      urlPattern: /\.supabase\.co\/storage/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'product-images',
+        expiration: { maxEntries: 100, maxAgeSeconds: 7 * 24 * 60 * 60 },
+      },
+    },
+    {
+      urlPattern: /^\/api\/products/,
+      handler: 'StaleWhileRevalidate',
+      options: { cacheName: 'api-products' },
+    },
+    {
+      urlPattern: /^https:\/\/fonts\.googleapis\.com/,
+      handler: 'CacheFirst',
+      options: { cacheName: 'google-fonts' },
+    },
+  ],
+})(nextConfig)
