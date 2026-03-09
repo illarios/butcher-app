@@ -160,22 +160,22 @@ export async function POST(request: NextRequest) {
 
   // Push new order notification to all admins (non-blocking)
   const adminDb = createAdminClient()
-  adminDb
-    .from('profiles')
-    .select('id')
-    .eq('role', 'admin')
-    .then(({ data: admins }) => {
-      if (!admins?.length) return
-      const fulfillmentLabel = fulfillmentType === 'pickup' ? 'Παραλαβή' : 'Delivery'
-      admins.forEach(({ id }) =>
-        sendPushToUser(id, {
-          title: `Νέα παραγγελία! ${order.order_number}`,
-          body: `${fulfillmentLabel} — ${total.toFixed(2)}€`,
-          data: { url: `/admin/orders` },
-        }).catch(() => {}),
-      )
-    })
-    .catch(() => {})
+  Promise.resolve(
+    adminDb
+      .from('profiles')
+      .select('id')
+      .eq('role', 'admin')
+  ).then(({ data: admins }) => {
+    if (!admins?.length) return
+    const fulfillmentLabel = fulfillmentType === 'pickup' ? 'Παραλαβή' : 'Delivery'
+    admins.forEach(({ id }) =>
+      sendPushToUser(id, {
+        title: `Νέα παραγγελία! ${order.order_number}`,
+        body: `${fulfillmentLabel} — ${total.toFixed(2)}€`,
+        data: { url: `/admin/orders` },
+      }).catch(() => {}),
+    )
+  }).catch(() => {})
 
   return NextResponse.json({
     orderId:     order.id,
