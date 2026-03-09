@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -55,6 +55,14 @@ function Toast({ message, onClose }: { message: string; onClose: () => void }) {
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function CheckoutSuccessPage() {
+  return (
+    <Suspense>
+      <CheckoutSuccessContent />
+    </Suspense>
+  )
+}
+
+function CheckoutSuccessContent() {
   const params      = useSearchParams()
   const orderNumber = params.get('order') ?? ''
   const pointsEarned = Number(params.get('points') ?? 0)
