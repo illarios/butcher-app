@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { RECIPE_IMAGES } from '@/lib/recipeImages'
 
 const RECIPES = [
   {
@@ -35,11 +36,20 @@ function RecipeCard({ recipe }: { recipe: typeof RECIPES[0] }) {
       href={`/recipes/${recipe.slug}`}
       className="group flex flex-col bg-white border border-[#EDE0D0] hover:border-[#C8102E] transition-colors overflow-hidden"
     >
-      {/* Image placeholder */}
+      {/* Image */}
       <div className="aspect-[16/9] bg-[#EDE0D0] relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-20">
-          🍳
-        </div>
+        {RECIPE_IMAGES[recipe.slug] ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={RECIPE_IMAGES[recipe.slug]}
+            alt={recipe.title}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-20">
+            🍳
+          </div>
+        )}
         <div className="absolute inset-0 bg-[#C8102E]/0 group-hover:bg-[#C8102E]/5 transition-colors" />
 
         {/* Tag */}
