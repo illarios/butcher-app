@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createNotification } from '@/lib/notifications'
+import { sendPushToUser } from '@/lib/push'
 import type { OrderStatus } from '@/types'
 
 const VALID_STATUSES: OrderStatus[] = [
@@ -63,6 +64,12 @@ export async function PATCH(request: Request, { params }: Params) {
       title: notif.title,
       body: notif.body,
       link: `/account/orders/${order.id}`,
+    }).catch(() => {})
+
+    sendPushToUser(order.profile_id, {
+      title: notif.title,
+      body: notif.body,
+      data: { url: `/account/orders/${order.id}` },
     }).catch(() => {})
   }
 

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Lato } from 'next/font/google'
 import './globals.css'
 
@@ -19,6 +19,24 @@ export const metadata: Metadata = {
   title: 'Κρεοπωλείο Μάρκος — Φρέσκο κρέας, απευθείας σε σας',
   description:
     'Παραγγείλτε φρέσκο κρέας online από το κρεοπωλείο Μάρκος. Άμεση παράδοση στο σπίτι σας.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Μάρκος',
+  },
+  icons: {
+    apple: '/icons/icon-192x192.png',
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#C8102E',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({

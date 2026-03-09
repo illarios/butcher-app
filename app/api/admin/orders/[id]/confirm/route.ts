@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { orderConfirmedEmail } from '@/lib/email/templates'
 import { createNotification } from '@/lib/notifications'
+import { sendPushToUser } from '@/lib/push'
 
 interface Params { params: Promise<{ id: string }> }
 
@@ -65,6 +66,13 @@ export async function PATCH(request: Request, { params }: Params) {
     title: `Παραγγελία ${order.order_number} επιβεβαιώθηκε`,
     body: readyLabel,
     link: `/account/orders/${order.id}`,
+  }).catch(() => {})
+
+  // Send push notification (non-blocking)
+  sendPushToUser(order.profile_id, {
+    title: `Παραγγελία ${order.order_number} επιβεβαιώθηκε!`,
+    body: `Έτοιμη ${readyLabel}`,
+    data: { url: `/account/orders/${order.id}` },
   }).catch(() => {})
 
   // Send confirmation email (non-blocking)

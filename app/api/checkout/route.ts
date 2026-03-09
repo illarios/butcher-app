@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { orderReceivedEmail, adminNewOrderEmail } from '@/lib/email/templates'
+import { sendPushToUser } from '@/lib/push'
 import type { CartStoreItem } from '@/lib/stores/cart'
 import type { Address, FulfillmentType, PaymentMethod, OrderItemSnapshot } from '@/types'
 
@@ -155,6 +157,25 @@ export async function POST(request: NextRequest) {
       ]).catch(console.error)
     }).catch(() => {})
   }
+
+  // Push new order notification to all admins (non-blocking)
+  const adminDb = createAdminClient()
+  adminDb
+    .from('profiles')
+    .select('id')
+    .eq('role', 'admin')
+    .then(({ data: admins }) => {
+      if (!admins?.length) return
+      const fulfillmentLabel = fulfillmentType === 'pickup' ? 'Παραλαβή' : 'Delivery'
+      admins.forEach(({ id }) =>
+        sendPushToUser(id, {
+          title: `Νέα παραγγελία! ${order.order_number}`,
+          body: `${fulfillmentLabel} — ${total.toFixed(2)}€`,
+          data: { url: `/admin/orders` },
+        }).catch(() => {}),
+      )
+    })
+    .catch(() => {})
 
   return NextResponse.json({
     orderId:     order.id,

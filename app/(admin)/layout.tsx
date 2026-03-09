@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { logoutAction } from '@/lib/actions/auth'
 import AdminNav from './AdminNav'
+import AdminBottomNav from '@/components/pwa/AdminBottomNav'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -53,8 +54,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             </Link>
           </div>
         </header>
-        <main className="flex-1 overflow-auto p-6">{children}</main>
+        <main className="flex-1 overflow-auto p-6 pb-20 md:pb-6">{children}</main>
       </div>
     </div>
+    <AdminBottomNav />
   )
 }

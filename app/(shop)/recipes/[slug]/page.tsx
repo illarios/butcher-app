@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { getRecipeBySlug, getProductsForRecipe } from '@/lib/queries/recipes'
 import type { RecipeDifficulty } from '@/types'
 import AddAllButton from '@/components/shop/recipe/AddAllButton'
+import { LOCAL_IMAGES } from '@/lib/localImages'
+import { RECIPE_IMAGES } from '@/lib/recipeImages'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -99,10 +101,10 @@ export default async function RecipeDetailPage({ params }: PageProps) {
 
         {/* ── Hero ────────────────────────────────────────────────── */}
         <div className="relative bg-[#0D0D0D] overflow-hidden" style={{ minHeight: '45vh' }}>
-          {recipe.image_url ? (
+          {(RECIPE_IMAGES[recipe.slug] ?? recipe.image_url) ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={recipe.image_url}
+              src={RECIPE_IMAGES[recipe.slug] ?? recipe.image_url!}
               alt={recipe.title}
               className="absolute inset-0 w-full h-full object-cover opacity-40"
             />
@@ -248,9 +250,9 @@ export default async function RecipeDetailPage({ params }: PageProps) {
                     className="group flex flex-col bg-white border border-[#EDE0D0] hover:border-[#C8102E] transition-colors overflow-hidden"
                   >
                     <div className="aspect-square bg-[#EDE0D0] relative overflow-hidden">
-                      {p.images?.[0] ? (
+                      {(LOCAL_IMAGES[p.slug] ?? p.images?.[0]) ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={LOCAL_IMAGES[p.slug] ?? p.images![0]} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-4xl opacity-20">🥩</div>
                       )}

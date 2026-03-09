@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getRecipes } from '@/lib/queries/recipes'
 import type { Metadata } from 'next'
 import type { RecipeDifficulty, RecipeMeatCategory, Recipe } from '@/types'
+import { RECIPE_IMAGES } from '@/lib/recipeImages'
 
 export const metadata: Metadata = {
   title: 'Συνταγές — Κρεοπωλείο Μάρκος',
@@ -55,10 +56,10 @@ function RecipeCard({ recipe, featured = false }: { recipe: Recipe; featured?: b
       <div className={`bg-[#EDE0D0] relative overflow-hidden shrink-0 ${
         featured ? 'sm:w-1/2 aspect-[4/3] sm:aspect-auto' : 'aspect-[16/9]'
       }`}>
-        {recipe.image_url ? (
+        {(RECIPE_IMAGES[recipe.slug] ?? recipe.image_url) ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={recipe.image_url}
+            src={RECIPE_IMAGES[recipe.slug] ?? recipe.image_url!}
             alt={recipe.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
