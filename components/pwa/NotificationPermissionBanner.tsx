@@ -1,13 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { shouldShowPushBanner, dismissPushBanner, subscribeToPush } from '@/lib/pwa'
 
 export default function NotificationPermissionBanner() {
-  const [show, setShow]     = useState(() => {
-    if (typeof window === 'undefined') return false
-    return shouldShowPushBanner()
-  })
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    setShow(shouldShowPushBanner())
+  }, [])
   const [loading, setLoading] = useState(false)
 
   const handleEnable = async () => {

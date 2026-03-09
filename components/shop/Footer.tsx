@@ -122,7 +122,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 pt-6 border-t border-[#F5EFE6]/10 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-[#F5EFE6]/40">
-          <p>© {new Date().getFullYear()} Κρεοπωλείο Μάρκος. Με επιφύλαξη παντός δικαιώματος.</p>
+          <p>© 2025 Κρεοπωλείο Μάρκος. Με επιφύλαξη παντός δικαιώματος.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-[#F5EFE6]/70 transition-colors">
               Πολιτική Απορρήτου

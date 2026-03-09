@@ -17,11 +17,11 @@ export default function BrandStory() {
           <div className="relative">
             <div className="aspect-[4/5] bg-[#EDE0D0] overflow-hidden relative">
               <Image
-                src="/images/products/TomahawkRibeye.jpg"
-                alt="Κρεοπωλείο Μάρκος — φρέσκο κρέας"
+                src="/images/brand/markos-butcher.jpg"
+                alt="Μάρκος — ο κρεοπώλης μας"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
+                className="object-cover object-top"
               />
             </div>
             {/* Red accent block */}
